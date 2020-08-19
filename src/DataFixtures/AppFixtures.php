@@ -40,7 +40,7 @@ class AppFixtures extends Fixture
         $company
             ->setEmail('company@gmail.com')
             ->setPassword($this->encoder->encodePassword($company, 'password'))
-            ->setRoles(['ROLE_COMPANY']);
+            ->setRoles(['ROLE_ADMIN']);
 
         $manager->persist($company);
 

@@ -4,12 +4,26 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      collectionOperations={
+ *         "get"={
+ *             "normalization_context"={"groups"={"user_read"}}
+ *         },
+ *         "post"
+ *     },
+ *     itemOperations={
+ *         "get"={
+ *             "normalization_context"={"groups"={"user_details_read"}}
+ *         },
+ *         "delete"
+ *     },  
+ * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User
@@ -23,16 +37,19 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_details_read"})
      */
     private string $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_details_read"})
      */
     private string $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_read","user_details_read"})
      */
     private string $email;
 

@@ -1,13 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PhoneRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      collectionOperations={
+ *         "get"={
+ *             "normalization_context"={"groups"={"phone_read"}}
+ *         }
+ *     },
+ *     itemOperations={
+ *         "get"={
+ *             "normalization_context"={"groups"={"phone_details_read"}}
+ *         }
+ *     },
+ *      
+ * )
  * @ORM\Entity(repositoryClass=PhoneRepository::class)
  */
 class Phone
@@ -17,32 +32,37 @@ class Phone
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"phone_read","phone_details_read"})
      */
-    private $brand;
+    private string $brand;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"phone_read","phone_details_read"})
      */
-    private $reference;
+    private string $reference;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"phone_details_read"})
      */
-    private $storage;
+    private string $storage;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"phone_details_read"})
      */
-    private $color;
+    private string $color;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"phone_details_read"})
      */
-    private $price;
+    private float $price;
 
     public function getId(): ?int
     {
