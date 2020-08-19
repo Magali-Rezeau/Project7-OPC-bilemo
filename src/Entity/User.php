@@ -7,6 +7,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTime;
+use DateTimeInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -58,6 +60,17 @@ class User
      */
     private Company $company;
 
+    /**
+     * @ORM\Column(type="datetime")
+     * @Groups({"user_read","user_details_read"})
+     */
+    private DateTimeInterface $created_at;
+
+    public function __construct()
+    {
+        $this->created_at = new DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +120,18 @@ class User
     public function setCompany(?Company $company): self
     {
         $this->company = $company;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

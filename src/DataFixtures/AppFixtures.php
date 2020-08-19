@@ -6,6 +6,7 @@ use Faker\Factory;
 use App\Entity\User;
 use App\Entity\Phone;
 use App\Entity\Company;
+use DateTime;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
