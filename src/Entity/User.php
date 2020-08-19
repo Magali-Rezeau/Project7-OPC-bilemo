@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
-use DateTime;
-use DateTimeInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ApiResource(
@@ -27,6 +29,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     },  
  * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity("email")
  */
 class User
 {
@@ -40,18 +43,22 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"user_details_read"})
+     * @Assert\NotBlank()
      */
     private string $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"user_details_read"})
+     * @Assert\NotBlank()
      */
     private string $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"user_read","user_details_read"})
+     * @Assert\NotBlank()
+     * @Assert\Email
      */
     private string $email;
 
