@@ -63,15 +63,16 @@ class User
     private string $email;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="users")
-     */
-    private Company $company;
-
-    /**
      * @ORM\Column(type="datetime")
      * @Groups({"user_read","user_details_read"})
      */
     private DateTimeInterface $created_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private Company $company;
 
     public function __construct()
     {
@@ -119,17 +120,6 @@ class User
         return $this;
     }
 
-    public function getCompany(): ?Company
-    {
-        return $this->company;
-    }
-
-    public function setCompany(?Company $company): self
-    {
-        $this->company = $company;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -139,6 +129,18 @@ class User
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
 
         return $this;
     }
