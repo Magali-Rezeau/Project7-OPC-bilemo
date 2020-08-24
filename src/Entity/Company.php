@@ -9,10 +9,23 @@ use App\Repository\CompanyRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=CompanyRepository::class)
+ * @ApiResource(
+ *      collectionOperations={
+ *         "get"={
+ *             "normalization_context"={"groups"={"company_read"}}
+ *         }
+ *     },
+ *  itemOperations={
+ *         "get"={
+ *             "normalization_context"={"groups"={"company_details_read"}}
+ *         }
+ *     },
+ * )
  */
 class Company implements UserInterface
 {
@@ -20,11 +33,13 @@ class Company implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"company_read", "company_details_read"})
      */
     private int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"company_read", "company_details_read"})
      */
     private string $email;
 
@@ -40,7 +55,7 @@ class Company implements UserInterface
     private string $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="company", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="company", orphanRemoval=true)
      */
     private $users;
 
