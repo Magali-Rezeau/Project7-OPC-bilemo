@@ -1,5 +1,7 @@
 Project7-OPC-bilemo
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/13ee4579cc6941dbb0c4e36afa2e199a)](https://app.codacy.com/manual/Magali-Rezeau/Project7-OPC-bilemo?utm_source=github.com&utm_medium=referral&utm_content=Magali-Rezeau/Project7-OPC-bilemo&utm_campaign=Badge_Grade_Dashboard)
+
 BileMo is a company offering a variety of premium mobile phones.
 BileMo's business model is not to sell its products directly on the website, but to provide all platforms that want it with access to the catalog via an API (Application Programming Interface). It is therefore exclusively B2B (business to business) sales.
 
