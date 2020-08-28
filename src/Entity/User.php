@@ -73,7 +73,10 @@ class User
      * @ORM\JoinColumn(nullable=false)
      */
     private Company $company;
-
+    
+    /**
+     * Allows to automatically set the created at when creating a user
+     */
     public function __construct()
     {
         $this->created_at = new DateTime();
@@ -119,7 +122,6 @@ class User
 
         return $this;
     }
-
 
     public function getCreatedAt(): ?\DateTimeInterface
     {

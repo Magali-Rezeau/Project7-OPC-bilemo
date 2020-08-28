@@ -12,6 +12,9 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use ApiPlatform\Core\EventListener\EventPriorities;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * Allows to automatically set the company when creating a user
+ */
 class CurrentCompanyForAddedUser implements EventSubscriberInterface
 {
     public function __construct(Security $security)

@@ -7,6 +7,11 @@ namespace App\Swagger;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
+/**
+ * SwaggerDecorator
+ * Management of authentication on documentation
+ * Management of the token generation
+ */
 final class SwaggerDecorator implements NormalizerInterface
 {
     private NormalizerInterface $decorated;

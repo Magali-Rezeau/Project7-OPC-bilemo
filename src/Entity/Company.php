@@ -19,12 +19,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *         "get"={
  *             "normalization_context"={"groups"={"company_read"}}
  *         }
- *     },
- *  itemOperations={
+ *      },
+ *      itemOperations={
  *         "get"={
  *             "normalization_context"={"groups"={"company_details_read"}}
  *         }
- *     },
+ *      },
  * )
  */
 class Company implements UserInterface
@@ -63,8 +63,6 @@ class Company implements UserInterface
     {
         $this->users = new ArrayCollection();
     }
-
-   
 
     public function getId(): ?int
     {
@@ -173,7 +171,5 @@ class Company implements UserInterface
         }
 
         return $this;
-    }
-
-   
+    } 
 }
