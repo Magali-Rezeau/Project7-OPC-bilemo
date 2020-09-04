@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CompanyRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -15,15 +16,25 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=CompanyRepository::class)
  * @ApiResource(
+ *      attributes={
+ *         "security"="is_granted('ROLE_ADMIN')"
+ *      },
  *      collectionOperations={
  *         "get"={
  *             "normalization_context"={"groups"={"company_read"}}
- *         }
+ *          }
  *      },
  *      itemOperations={
  *         "get"={
  *             "normalization_context"={"groups"={"company_details_read"}}
  *         }
+ *      },
+ *      subresourceOperations={
+ *         "api_get_subresource"={
+ *              "method"="GET",
+ *              "path"="/companies/{id}/users",
+ *              "security"="has_role('ROLE_AUTHENTICATED')"
+ *          },
  *      },
  * )
  */
@@ -56,6 +67,7 @@ class Company implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="company", orphanRemoval=true)
+     * @ApiSubresource
      */
     private $users;
 
@@ -171,5 +183,5 @@ class Company implements UserInterface
         }
 
         return $this;
-    } 
+    }
 }

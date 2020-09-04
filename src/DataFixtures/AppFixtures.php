@@ -45,6 +45,14 @@ class AppFixtures extends Fixture
 
         $manager->persist($company);
 
+        $company2 = new Company();
+        $company2
+            ->setEmail('company2@gmail.com')
+            ->setPassword($this->encoder->encodePassword($company2, 'password2'))
+            ->setRoles(['ROLE_USER']);
+
+        $manager->persist($company2);
+
         $faker = Factory::create('fr_FR');
         for ($i = 0; $i < 20; $i++) {
             $user = new User();

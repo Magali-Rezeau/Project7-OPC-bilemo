@@ -11,21 +11,28 @@ use App\Repository\UserRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ApiResource(
  *      collectionOperations={
- *         "get"={
- *             "normalization_context"={"groups"={"user_read"}}
+ *         "post"={
+ *             "normalization_context"={"groups"={"user_details_read"}},
+ *             "security"="is_granted('ROLE_ADMIN')",
+ *             "security_message"="Sorry, but you are not an admin."
  *         },
- *         "post"
  *     },
  *     itemOperations={
  *         "get"={
- *             "normalization_context"={"groups"={"user_details_read"}}
+ *             "normalization_context"={"groups"={"user_details_read"}},
+ *             "security"="(is_granted('ROLE_ADMIN') and object.getCompany() == user)",
+ *             "security_message"="Sorry, but you are not the user owner."
  *         },
- *         "delete"
+ *         "delete"={
+ *             "security"="(is_granted('ROLE_ADMIN') and object.getCompany() == user)",
+ *             "security_message"="Sorry, but you are not the user owner."
+ *         },
  *     },  
  * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -73,7 +80,7 @@ class User
      * @ORM\JoinColumn(nullable=false)
      */
     private Company $company;
-    
+
     /**
      * Allows to automatically set the created at when creating a user
      */
